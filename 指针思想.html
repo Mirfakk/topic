@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>指针思想</title>
+</head>
+
+<body>
+  <script>
+    /*
+      寻找字符串中，“连续重复” 次数最多的字符
+      'aaaabbbbbcccccccccdddddd'
+
+      思路：
+      如果i和j指向的字一样，那么i不懂，j后移
+      如果i和j指向的字不一样，说明它们之间的字都是连续相同的，让i追上j，j后移。
+      类似于有两个拇指，左边拇指i保持不懂，右边拇指j开始比较。
+      若有相同次数，则以先出现为准
+    */
+    // var str = 'aaaabbbbbbbbcccccccccdddddd';
+    var str = 'abaaababababababababaccccd';
+    //指针,从索引0.1开始比较
+    var i = 0;
+    var j = 1;
+    //统计次数
+    var maxReapeatCount = 0;
+    //最多的字符
+    var maxReapeatStr = '';
+
+    //当i还在范围内的时候，就一直寻找下去
+    while (i <= str.length - 1) {
+      //看指向的第i项和第j项是否相同
+      if (str[i] != str[j]) {
+        console.log('此时' + i + '和' + j + '相同的，重复的是' + str[i] + '，次数是' + (j - i));
+        //此时重复的都是str[i]项，次数是j-i
+        if ((j - i) > maxReapeatCount) {
+          maxReapeatCount = (j - i);
+          maxReapeatStr = str[i];//将i指针指向的字符存储
+        }
+        //若指向的字符不同，那么i追上j
+        i = j;
+
+      }
+      //j要保持后移，不断指向下一个字符，直到超过字符串长度
+      j++;
+    }
+    console.log(maxReapeatStr);
+  </script>
+</body>
+
+</html>

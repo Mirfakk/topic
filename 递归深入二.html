@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>递归深入</title>
+</head>
+
+<body>
+  <script>
+    /*
+      试将高维数组[1,2[3,[4,5],6],7,[8],9]转为对象
+      形式：
+      {
+          value：1，
+          value：2，
+          children:[
+            {
+              value:3
+              ...
+            }
+          ]
+      }
+      需要规则复现，就要用到递归
+     */
+
+    //测试数组
+    var arr = [1, 2, [3, 4], 5, [6, [7, [8, [9]]]]];
+
+    //写法一：
+    // //转换函数，这个参数是数组，遇见数字时不用递归
+    // function convert(arr) {
+    //   //准备结果数组
+    //   var result = [];
+    //   //遍历传入的arr的每一项
+    //   for (let i = 0; i < arr.length; i++) {
+    //     //检测数组中某一项是数字的话，直接往结果数组压入数字即可
+    //     if (typeof arr[i] == 'number') {
+    //       result.push({
+    //         value: arr[i]
+    //       });
+    //     } else if (Array.isArray(arr[i])) {
+    //       //如果是数组，那就递归
+    //       //把当前的结果数组推入一个chlidren
+    //       result.push({
+    //         children: convert(arr[i])
+    //       })
+    //     }
+    //   }
+    //   return result;
+    // }
+
+    //写法二
+    //参数不是arr这个词语，而是item，意味着现在item可能是数组，也可能是数字
+    function convert(item) {
+      //判断
+      if (typeof item == 'number') {
+        //如果传进来参数是数字
+        return {
+          value: item
+        }
+      } else if (Array.isArray(item)) {
+        //如果传进来参数是数组,返回children的映射
+        return {
+          //_item循环变量，map自带循环，映射会在内存中开辟新数组
+          children: item.map(_item => convert(_item))
+        }
+      }
+    }
+
+    var o = convert(arr);
+    console.log(o);
+  </script>
+</body>
+
+</html>

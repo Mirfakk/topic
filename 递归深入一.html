@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width= , initial-scale=1.0">
+  <title>递归深入</title>
+</head>
+
+<body>
+  <script>
+    /*
+      输入斐波那契数列的前10项，即1,1,2,3,5,8,13,21,34,55....    
+    */
+
+    //缓存对象，用于存储计算过的值，避免重复计算fib(n)
+    var cache = {};
+
+    //创建一个函数
+    function fib(n) {
+      //判断缓存对象中有没有这个值，如果有就直接用
+      //这里用 (n in cache) 也可以
+      if (cache.hasOwnProperty(n)) {
+        //如果有，直接返回即可，就不用去重复计算
+        return cache[n];
+      }
+      //关键：需要有出口，否则是死循环
+      var v = n == 0 || n == 1 ? 1 : fib(n - 1) + fib(n - 2);
+      //计算出来后将其写入缓存中，若再遇到直接使用即可
+      cache[n] = v;
+      //把结果返回
+      return v;
+    }
+
+    //若算fib(5),则会返回fib(4) + fib(3)两个函数，而fib(4)又返回fib(3)和fib(2).....
+
+    for (let i = 0; i <= 9; i++) {
+      console.log(fib(i));
+    }
+    console.log(cache);
+  </script>
+</body>
+
+</html>
